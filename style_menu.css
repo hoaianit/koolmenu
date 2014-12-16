@@ -1,0 +1,290 @@
+@charset "utf-8";
+body {
+	font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+	
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+
+td, th {
+	vertical-align:top;
+	
+}
+/* ~~ Element/tag selectors ~~ */
+ul, ol, dl { /* Due to variations between browsers, it's best practices to zero padding and margin on lists. For consistency, you can either specify the amounts you want here, or on the list items (LI, DT, DD) they contain. Remember that what you do here will cascade to the .nav list unless you write a more specific selector. */
+	padding: 0;
+	margin: 0;
+}
+h1, h2, h3, h4, h5, h6, p {
+	margin-top: 10px;	 /* removing the top margin gets around an issue where margins can escape from their containing div. The remaining bottom margin will hold it away from any elements that follow. */
+	padding-right: 15px;
+	padding-left: 15px; /* adding the padding to the sides of the elements within the divs, instead of the divs themselves, gets rid of any box model math. A nested div with side padding can also be used as an alternate method. */
+	
+	}
+h2 {
+	color:red;
+}
+/* Nav*/
+#main_nav {
+	margin-bottom:30px;
+}
+#main_nav ul {
+	list-style-type:none;
+	padding:0;
+	width:1000px;
+	margin: 0 auto;
+}
+#main_nav li {
+	width:200px;
+	float:left;
+}
+#main_nav a {
+	background-color: #419CFC;
+	color:white;
+	display: block;
+	text-decoration: none;
+	font-size:0.7em;
+	text-align:center;
+	font-weight:bold;
+	padding:5px;
+	border: solid 1px white;
+	height:23px;
+	overflow:hidden;
+}
+#main_nav li ul {
+	position:absolute;
+	left:-9999px;
+	width:150px;
+}
+
+#main_nav li:hover ul{
+	left:auto;
+	z-index:11;
+}
+
+#main_nav  li  ul li  ul{   
+    display:none;
+}
+#main_nav li  ul li:hover  ul{
+    display:block;
+    position:absolute;
+    left:199px;
+	margin:-2px 0 0 1px;
+    top:2px;
+    width:150px;
+}
+#main_nav a:hover {
+	background-color: red;
+}
+
+#main_nav li.current a {
+	background-color: lightgrey;
+}
+
+#main_nav a:active{
+	background-color: red;
+	color: white;
+}
+#main_nav  input {
+	display:none;
+}
+
+#log_in_name {
+	position:absolute;
+	top:10px;
+	right:10px;
+}
+
+#logout_link {
+	position:absolute;
+	top:35px;
+	background-color:grey;
+	right:10px;
+	color:white;
+	text-decoration:none;
+	padding:3px;
+}
+
+#logout_link:hover {
+	background-color:red;
+}
+a.notesMenu:link {
+ text-decoration: none;
+ color: black;
+ display: block;
+ width: 100%;
+ height: 100%;
+ background: FFF7E6;
+ text-align:center;
+}
+
+a.notesMenu:visited {
+ text-decoration: none;
+ color: black;
+ display: block;
+ width: 100%;
+ height: 100%;
+ background: FFF7E6;
+ text-align:center;
+}
+
+a.notesMenu:hover {
+ text-decoration: none;
+ color: white;
+ display: block;
+ width: 100%;
+ height: 100%;
+ background: gray;
+ text-align:center;
+}
+
+a.notesMenu:active {
+ text-decoration: none;
+ color: red;
+ display: block;
+ width: 100%;
+ height: 100%;
+ background: white;
+ text-align:center;
+}
+
+a.notesMenuEmpty:link {
+ text-decoration: none;
+ color: white;
+ display: block;
+ width: 100%;
+ height: 100%;
+ text-align:center;
+ background: white;
+ text-align:center;
+}
+
+a.notesMenuEmpty:visited {
+ text-decoration: none;
+ color: white;
+ display: block;
+ width: 100%;
+ height: 100%;
+ text-align:center;
+ background: white;
+ text-align:center;
+}
+
+a.notesMenuEmpty:hover {
+ text-decoration: none;
+ color: black;
+ display: block;
+ width: 100%;
+ height: 100%;
+ text-align:center;
+ background: gray;
+ text-align:center;
+}
+
+a.notesMenu:active {
+ text-decoration: none;
+ color: red;
+ display: block;
+ width: 100%;
+ height: 100%;
+ text-align:center;
+ background: white;
+ text-align:center;
+}
+
+
+a img { /* this selector removes the default blue border displayed in some browsers around an image when it is surrounded by a link */
+	border: none;
+}
+
+/* ~~ Styling for your site's links must remain in this order - including the group of selectors that create the hover effect. ~~ */
+a:link {
+	color: #42413C;
+	text-decoration: underline; /* unless you style your links to look extremely unique, it's best to provide underlines for quick visual identification */
+}
+.CheckBoxShowCustomer {
+	text-align: left;
+	font-size: 12px;
+}
+
+a:visited {
+	color: #6E6C64;
+	text-decoration: underline;
+}
+a:hover, a:active, a:focus { /* this group of selectors will give a keyboard navigator the same hover experience as the person using a mouse. */
+
+}
+
+.tabs {
+  list-style-type: none;
+  margin-bottom: 29px;
+  padding: 0 !important;
+  
+}
+.tabs li {
+  border: gray solid 1px;
+  border-bottom: none;
+  float: left;
+  margin: 0 2px 0 0;
+  padding: .2em .5em;
+}
+.tabs li a {
+  color: gray;
+  font-weight: bold;
+  text-decoration: none;
+}
+.tabs li.active, .tabs li.current {
+  background: #419CFC;
+  border: #419CFC solid 1px;
+}
+.tabs li.active a, .tabs li.current a{
+  color: white;
+}
+.tabs li:hover, .tabs li:hover a {
+	background: #419CFC;
+	color: white;
+	border: #419CFC solid 1px;
+}
+/* ~~ this fixed width container surrounds all other divs ~~ */
+.container {
+	width: 1000px;
+	background: #FFF;
+	margin: 0 auto; /* the auto value on the sides, coupled with the width, centers the layout */
+	overflow: hidden; /* this declaration makes the .container understand where the floated columns within ends and contain them */
+	padding:10px;
+	position:relative;
+}
+
+/* ~~ These are the columns for the layout. ~~ 
+
+1) Padding is only placed on the top and/or bottom of the divs. The elements within these divs have padding on their sides. This saves you from any "box model math". Keep in mind, if you add any side padding or border to the div itself, it will be added to the width you define to create the *total* width. You may also choose to remove the padding on the element in the div and place a second div within it with no width and the padding necessary for your design.
+
+2) No margin has been given to the columns since they are all floated. If you must add margin, avoid placing it on the side you're floating toward (for example: a right margin on a div set to float right). Many times, padding can be used instead. For divs where this rule must be broken, you should add a "display:inline" declaration to the div's rule to tame a bug where some versions of Internet Explorer double the margin.
+
+3) Since classes can be used multiple times in a document (and an element can also have multiple classes applied), the columns have been assigned class names instead of IDs. For example, two sidebar divs could be stacked if necessary. These can very easily be changed to IDs if that's your preference, as long as you'll only be using them once per document.
+
+4) If you prefer your nav on the right instead of the left, simply float these columns the opposite direction (all right instead of all left) and they'll render in reverse order. There's no need to move the divs around in the HTML source.
+
+*/
+#content {
+	width:960px; margin:0 auto;
+	min-height:550px;
+	background-color: white;
+}
+.menu_pic {
+	width:300px;
+	float:left;
+	margin-bottom:30px;
+}
+.reReviews, .main_content {
+	width:290px;
+	margin-left:40px;
+	float:left;
+	margin-bottom:30px;
+}
+button {
+	background: #419CFC;
+	color:white;
+	font-weight:bold;
+}
