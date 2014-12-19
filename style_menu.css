@@ -22,9 +22,14 @@ h1, h2, h3, h4, h5, h6, p {
 	padding-left: 15px; /* adding the padding to the sides of the elements within the divs, instead of the divs themselves, gets rid of any box model math. A nested div with side padding can also be used as an alternate method. */
 	
 	}
+h1 {
+	color:red;
+	text-align:center;
+}
 h2 {
 	color:red;
 }
+
 /* Nav*/
 #main_nav {
 	margin-bottom:30px;
@@ -219,6 +224,7 @@ a:hover, a:active, a:focus { /* this group of selectors will give a keyboard nav
 .tabs {
   list-style-type: none;
   margin-bottom: 29px;
+  border-radius: 5px;
   padding: 0 !important;
   
 }
@@ -228,6 +234,8 @@ a:hover, a:active, a:focus { /* this group of selectors will give a keyboard nav
   float: left;
   margin: 0 2px 0 0;
   padding: .2em .5em;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }
 .tabs li a {
   color: gray;
@@ -277,8 +285,14 @@ a:hover, a:active, a:focus { /* this group of selectors will give a keyboard nav
 	float:left;
 	margin-bottom:30px;
 }
-.reReviews, .main_content {
-	width:290px;
+.main_content {
+	width:260px;
+	margin-left:40px;
+	float:left;
+	margin-bottom:30px;
+}
+.reReviews {
+	width:320px;
 	margin-left:40px;
 	float:left;
 	margin-bottom:30px;
@@ -287,4 +301,39 @@ button {
 	background: #419CFC;
 	color:white;
 	font-weight:bold;
+	
 }
+#confirm_order {
+	
+	margin:10px 0px;
+	float:left;
+}
+
+#toTop {
+    display: none;
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    left: 51%;
+    margin-left: 500px;
+    overflow: hidden;
+    width: 42px;
+    height: 45px;
+    border: none;
+    text-indent: -999px;
+    z-index: 20;
+    background: url(images/restaurant_pic/totop.png) no-repeat left 0;
+    transition: 0s ease;
+    -o-transition: 0s ease;
+    -webkit-transition: 0s ease;
+}
+#toTop:hover {
+    outline: none;
+    background-position: right 0;
+}
+thead th {
+	background-color:#419CFC;
+	color:white;
+}
+tr:nth-child(even) {background: #CCC;}
+tr:nth-child(odd) {background: #FFF;}

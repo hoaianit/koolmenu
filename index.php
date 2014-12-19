@@ -6,9 +6,32 @@
 <title>menu</title>
 <link href="style_menu.css" rel="stylesheet" type="text/css" />
 <link href="js/css/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css"/>
-<script src="js/jquery-1.6.2.js"></script>
-<script src="js/jquery-ui-1.8.16.custom.min.js"></script>
-<script src="js/jquery.dataTables.min.js"></script>
+
+<script src="js/jquery-2.1.0.min.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/jquery-migrate-1.2.1.js"></script>
+<script src="js/script.js"></script> 
+<script src="js/jquery.tooltipster.js"></script>
+
+<script src="js/jquery.ui.totop.js"></script>
+
+
+<script>
+
+jQuery(document).ready(function() {
+  jQuery(".myorder_expand").hide();
+  //toggle
+  jQuery(".myorder").click(function()
+  {
+    jQuery(this).next(".myorder_expand").slideToggle(500);
+  });
+  
+  $().UItoTop({ easingType: 'easeOutQuart' });
+               $('.tooltip').tooltipster();
+			   
+});
+
+</script>
 </head>
   
 
@@ -16,7 +39,7 @@
 require_once("includes/check_session.php");
 require_once ("includes/classes/login_functions.php");
 require_once ("includes/classes/misc_functions.php");
-
+include_once("googleanalytics.php");
 ?>
 
 <?php
@@ -29,7 +52,7 @@ require_once ("includes/classes/misc_functions.php");
 ?>
 	<body>
 	<div id="nav" style="width:960px; margin:0 auto;">
-	<h2>Main menu</h2>
+	<h1>Restaurant's logo</h1>
 	<ul class="tabs">
 		<li <? if($_GET["menuStatus"]==0 or !isset($_GET["menuStatus"])) echo 'class="current"'; ?>>
 			<a href='index.php?myAction=menu&menuStatus=0'>All dishes</a>
@@ -42,9 +65,8 @@ require_once ("includes/classes/misc_functions.php");
 		</li>
 	</ul>
 	</div>
-	<br>
-    <div id="content" style="width:960px; margin:0 auto;">
-		
+    <div id="content" style="width:960px; margin:0 auto;clear:both;">
+		<div id="goto" style="width:200px;float:left;clear:both;">
 		<select style="height:30px;margin-top:10px;">
 		<option>
 		Go To
@@ -62,9 +84,55 @@ require_once ("includes/classes/misc_functions.php");
 		Drink
 		</option>
 		</select>
-		<br>
-		<hr>
+		</div>
+		<div id="myorder" style="text-align: center;width:560px;margin:0 auto;float:left;margin-top:15px;">
+			<div class="myorder"><p style="color:red;font-weight:bold;font-size:1.1em;">My order</p>
+			<p style="font-size:10px;text-align: center;margin-top:-20px;">(click to expand/collapse the list)</p>
+			</div>
+			<div class="myorder_expand" style="width:560px;margin:0 auto;">
+				<table style="width:100%;">
+					<thead>
+						<tr>
+							<th>Quantity</th>
+							<th>Dish</th>
+							<th>Note</th>
+							<th>Price</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+						<td>1</td>
+						<td>Chicken Rice</td>
+						<td><input style="width:98%;" id="note_" name="note_" placeholder="Write a note for your dish" value="Hot and Sour"/></td>
+						<td>$10</td>
+						<td>$10</td>
+						</tr>
+						<tr>
+						<td>1</td>
+						<td>Pho</td>
+						<td><input style="width:98%;" id="note_" name="note_" placeholder="Write a note for your dish" value=""/></td>
+						<td>$10</td>
+						<td>$10</td>
+						</tr>
+						<tr>
+						<td>1</td>
+						<td>Coke</td>
+						<td><input style="width:98%;" id="note_" name="note_" placeholder="Write a note for your dish" value="zero"/></td>
+						<td>$10</td>
+						<td>$10</td>
+						</tr>
+						<tr><td colspan="3"><td>Total</td><td>$30.00</td></tr>
+				
+				</td>
+					</tbody>
+				</table>
+				&nbsp;<button id="confirm_order">Confirm</button>
+			</div>
+		</div>
+		<br><br>
 			<div class="category" style="width:960px;clear:both;">
+			<hr>
 				<h2>Soup</h2>
 				<div style="width:960px;">
 				<h4>Chicken Rice</h4>
@@ -78,8 +146,7 @@ require_once ("includes/classes/misc_functions.php");
 					</div>
 					<div class="reReviews">
 						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" />
-						
-						<br>Comment:
+						<br>Comment:&nbsp;<input id="comment_" name="comment_" placeholder="Write your comment here"/>
 					</div>
 				</div>
 				
@@ -95,7 +162,7 @@ require_once ("includes/classes/misc_functions.php");
 					</div>
 					<div class="reReviews">
 						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" />
-						<br>Comment:
+						<br>Comment:&nbsp;<input id="comment_" name="comment_" placeholder="Write your comment here"/>
 					</div>
 				</div>
 				
@@ -110,7 +177,7 @@ require_once ("includes/classes/misc_functions.php");
 						<br>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 					</div>
 					<div class="reReviews">
-						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:
+						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:&nbsp;<input id="comment_" name="comment_" placeholder="Write your comment here"/>
 					</div>
 				</div>
 				
@@ -125,7 +192,7 @@ require_once ("includes/classes/misc_functions.php");
 						<br>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 					</div>
 					<div class="reReviews">
-						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:
+						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:&nbsp;<input id="comment_" name="comment_" placeholder="Write your comment here"/>
 					</div>
 				</div>
 			</div>
@@ -144,7 +211,7 @@ require_once ("includes/classes/misc_functions.php");
 						<br>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 					</div>
 					<div class="reReviews">
-						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:
+						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:&nbsp;<input id="comment_" name="comment_" placeholder="Write your comment here"/>
 					</div>
 				</div>
 				
@@ -159,7 +226,7 @@ require_once ("includes/classes/misc_functions.php");
 						<br>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 					</div>
 					<div class="reReviews">
-						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:
+						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:&nbsp;<input id="comment_" name="comment_" placeholder="Write your comment here"/>
 					</div>
 				</div>
 				
@@ -174,7 +241,7 @@ require_once ("includes/classes/misc_functions.php");
 						<br>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 					</div>
 					<div class="reReviews">
-						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:
+						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:&nbsp;<input id="comment_" name="comment_" placeholder="Write your comment here"/>
 					</div>
 				</div>
 				
@@ -189,7 +256,7 @@ require_once ("includes/classes/misc_functions.php");
 						<br>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 					</div>
 					<div class="reReviews">
-						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:
+						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:&nbsp;<input id="comment_" name="comment_" placeholder="Write your comment here"/>
 					</div>
 				</div>
 			</div>
@@ -208,7 +275,7 @@ require_once ("includes/classes/misc_functions.php");
 						<br>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 					</div>
 					<div class="reReviews">
-						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:
+						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:&nbsp;<input id="comment_" name="comment_" placeholder="Write your comment here"/>
 					</div>
 				</div>
 				
@@ -223,7 +290,7 @@ require_once ("includes/classes/misc_functions.php");
 						<br>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 					</div>
 					<div class="reReviews">
-						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:
+						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:&nbsp;<input id="comment_" name="comment_" placeholder="Write your comment here"/>
 					</div>
 				</div>
 				
@@ -238,7 +305,7 @@ require_once ("includes/classes/misc_functions.php");
 						<br>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 					</div>
 					<div class="reReviews">
-						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:
+						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:&nbsp;<input id="comment_" name="comment_" placeholder="Write your comment here"/>
 					</div>
 				</div>
 				
@@ -253,7 +320,7 @@ require_once ("includes/classes/misc_functions.php");
 						<br>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 					</div>
 					<div class="reReviews">
-						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:
+						Reviews: &nbsp;<img style="width:120px;margin-bottom:-4px;" src="images/restaurant_pic/3stars.jpg" /><br><br>Comment:&nbsp;<input id="comment_" name="comment_" placeholder="Write your comment here"/>
 					</div>
 				</div>
 			</div>
