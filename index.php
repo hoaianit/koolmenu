@@ -29,6 +29,7 @@ jQuery(document).ready(function() {
   // hide or show a Category
   jQuery(".categoryLink").click(function()
   {
+	//jQuery(".myorder_expand").hide();
     var categoryLink = $(this).text();
 	//console.log(categoryLink);
 	jQuery(".category").hide();
@@ -45,20 +46,13 @@ jQuery(document).ready(function() {
 			$(document).ready(function(){		
 				var lineNumber = $("#lineNumber").val();
 				
-				$('.del').live('click',function(){
-				//if(lineNumber>1){
-					$(this).parent().parent().remove();
-					lineNumber--;
-					//console.log(lineNumber);
-					$("#lineNumber").val(lineNumber);
-				//}
-				//else alert("PO need at least 1 line item");
-				});
+				
 				var total = 0;
 				var subtotal = 0;
 				var tax = 0;
 				$('.orderDish').live('click',function(){
 					//$(this).val('Delete');
+					jQuery(".myorder_expand").show();
 					//$(this).attr('class','del');
 					lineNumber++;
 					var dish = $(this).parent().parent().find('h4').text();
@@ -67,11 +61,11 @@ jQuery(document).ready(function() {
 						console.log(price);
 					//console.log(lineNumber);
 					var appendTxt = '<tr>'+
-					'<td>1<input type="hidden" name="quantity_'+lineNumber+'" value ="1" />'+
+					'<td align="center">1<input type="hidden" name="quantity_'+lineNumber+'" value ="1" />'+
 					'</td><td>'+dish+'<input type="hidden" placeholder="Dish" name="dish_'+lineNumber+'" value ="" />'+
-					'</td><td><input type="text" style="width:97%;" name="note_'+lineNumber+'" placeholder="Note"  value ="" /></td>'+
-					'<td>$'+price+'<input type="hidden" name="price_'+lineNumber+'" value ="" /></td>'+
-					'<td>$'+price+'<input type="hidden" name="total_'+lineNumber+'" value ="" /></td>'+
+					'</td><td><input type="text" style="width:97%;" name="note_'+lineNumber+'" placeholder="Write a note for your dish"  value ="" /></td>'+
+					'<td>$'+price+'<input type="hidden" name="price_'+lineNumber+'" value ="'+price+'" /></td>'+
+					'<td>$'+price+'<input type="hidden" name="total_'+lineNumber+'" value ="'+price+'" /><a title="Delete" class="del" href="#" ><img style="width:20px; float:right;" src="images/restaurant_pic/del.png" /></a></td>'+
 					'</tr>';
 					$("tr:last").prev().prev().prev().after(appendTxt);
 					subtotal= subtotal + price;
@@ -79,12 +73,34 @@ jQuery(document).ready(function() {
 					total= tax + subtotal;
 					//console.log(total);
 					$("#lineNumber").val(lineNumber);
-					$("#tax").text("$"+tax.toFixed(2));
-					$("#subtotal").text("$"+subtotal.toFixed(2));
-					$("#total").text("$"+total.toFixed(2));
+					$("#tax").html('$'+tax.toFixed(2)+'<input type="hidden" name="tax" value="'+tax.toFixed(2)+'" />');
+					$("#subtotal").html('$'+subtotal.toFixed(2)+'<input type="hidden" name="subtotal" value="'+subtotal.toFixed(2)+'" />');
+					$("#total").html('$'+total.toFixed(2)+'<input type="hidden" name="total" value="'+total.toFixed(2)+'" />');
 					
 				}); 
-									
+				
+				$('.del').live('click',function(){
+					// just hide the row, if delete the row, it will mess up database when saving
+					$(this).parent().parent().hide();
+					// set quantity = 0, when an order is sent, should check this value
+					$(this).parent().parent().find("td:first-child input").val(0);
+					var thisprice= $(this).prev().val();
+					 subtotal = $("#subtotal input").val() - thisprice;
+					 //fix minus Float number when calculating
+					 if(subtotal<= 0.02) subtotal=0;
+					 tax = $("#tax input").val() - thisprice*0.13;
+					 //fix minus Float number when calculating
+					 if(tax<= 0.02) tax=0;
+					 total = subtotal + tax;
+					console.log(subtotal);
+					//console.log($("#total").text());
+					$("#subtotal").html("$"+subtotal.toFixed(2)+'<input type="hidden" name="tax" value="'+subtotal.toFixed(2)+'" />');
+					$("#tax").html("$"+tax.toFixed(2)+'<input type="hidden" name="tax" value="'+tax.toFixed(2)+'" />');
+					$("#total").html("$"+total.toFixed(2)+'<input type="hidden" name="tax" value="'+total.toFixed(2)+'" />');
+					//lineNumber--;
+					//console.log(lineNumber);
+					$("#lineNumber").val(lineNumber);
+				});			
 			});
 		</script>
 
@@ -160,14 +176,14 @@ include_once("googleanalytics.php");
 			<span style="font-size:10px;margin-top:-20px;">(click to expand/collapse the list)</span>
 			</div>
 			<div class="myorder_expand" style="width:560px;">
-				<table style="width:600px;">
+				<table style="width:615px;">
 					<thead>
 						<tr>
 							<th style="width:75px !important;">Quantity</th>
 							<th style="width:190px !important;">Dish</th>
 							<th style="width:200px !important;">Note</th>
-							<th style="width:50px !important;">Price</th>
-							<th style="width:75px !important;">Total</th>
+							<th style="width:55px !important;">Price</th>
+							<th style="width:90px !important;">Total</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -201,7 +217,7 @@ include_once("googleanalytics.php");
 						</tr>
 						<tr><td colspan="3"><td>SubTotal</td><td id="subtotal">$0.00</td></tr>
 						<tr><td colspan="3"><td>Tax</td><td id="tax">$0.00</td></tr>
-						<tr><input type="hidden" name="lineNumber" id="lineNumber" value="0" /><td colspan="3"><td>Total</td><td id="total">$0.00</td></tr>
+						<tr><input type="hidden" name="lineNumber" id="lineNumber" value="0" /><td colspan="3"><td>Total</td><td id="total">$0.00<input type="hidden" name="total" value="0"/></td></tr>
 						
 				</td>
 					</tbody>
